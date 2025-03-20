@@ -31,7 +31,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2018-02-01",
+            "apiVersion": "2023-05-01",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/ddosProtectionPlans', parameters('moodleCommon').ddosPlanName)]"
             ],

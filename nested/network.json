@@ -107,7 +107,7 @@
         {
             "condition": "[parameters('moodleCommon').vnetGwDeploySwitch]",
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('moodleCommon').location]",
             "name": "[parameters('moodleCommon').gatewayPublicIPName]",
             "properties": {
@@ -120,7 +120,7 @@
         {
             "condition": "[parameters('moodleCommon').vnetGwDeploySwitch]",
             "type": "Microsoft.Network/virtualNetworkGateways",
-            "apiVersion": "2017-10-01",
+            "apiVersion": "2021-05-01",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', parameters('moodleCommon').gatewayPublicIPName)]",
                 "Microsoft.Resources/deployments/subnetTemplate"
@@ -160,7 +160,7 @@
                 "name": "[parameters('moodleCommon').lbSku]",
                 "tier": "[parameters('moodleCommon').lbTier]"
             },
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('moodleCommon').location]",
             "name": "[parameters('moodleCommon').lbPipName]",
             "properties": {
@@ -180,7 +180,7 @@
                 "name": "[parameters('moodleCommon').lbSku]",
                 "tier": "[parameters('moodleCommon').lbTier]"
             },
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('moodleCommon').location]",
             "name": "[parameters('moodleCommon').lbOutPipName001]",
             "properties": {
@@ -200,7 +200,7 @@
                 "name": "[parameters('moodleCommon').lbSku]",
                 "tier": "[parameters('moodleCommon').lbTier]"
             },
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('moodleCommon').location]",
             "name": "[parameters('moodleCommon').lbOutPipName002]",
             "properties": {
@@ -216,13 +216,13 @@
         {
             "condition": "[equals(parameters('moodleCommon').httpsTermination, 'AppGw')]",
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('moodleCommon').location]",
             "name": "[parameters('moodleCommon').appGwPipName]",
-            "sku" : {
-                "name" : "[if(endswith(parameters('moodleCommon').appGwSkuName,'v2'),'Standard','Basic')]"
+            "sku": {
+                "name": "[if(endswith(parameters('moodleCommon').appGwSkuName,'v2'),'Standard','Basic')]"
             },
-            "properties": {                
+            "properties": {
                 "dnsSettings": {
                     "domainNameLabel": "[parameters('moodleCommon').appGwName]"
                 },
@@ -231,7 +231,7 @@
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('moodleCommon').location]",
             "name": "[parameters('moodleCommon').ctlrPipName]",
             "properties": {
@@ -250,9 +250,8 @@
             "sku": {
                 "name": "[parameters('moodleCommon').lbSku]",
                 "tier": "[parameters('moodleCommon').lbTier]"
-
             },
-            "apiVersion": "2019-11-01",
+            "apiVersion": "2023-05-01",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/',parameters('moodleCommon').lbPipName)]",
                 "[concat('Microsoft.Network/publicIPAddresses/',parameters('moodleCommon').lbOutPipName001)]",
@@ -274,7 +273,6 @@
                                 "id": "[variables('lbPipID')]"
                             }
                         }
-
                     },
                     {
                         "name": "[parameters('moodleCommon').extOutName001 ]",
@@ -283,7 +281,6 @@
                                 "id": "[variables('lbOutPip001ID')]"
                             }
                         }
-
                     },
                     {
                         "name": "[parameters('moodleCommon').extOutName002 ]",
@@ -292,7 +289,6 @@
                                 "id": "[variables('lbOutPip002ID')]"
                             }
                         }
-
                     }
                 ],
                 "loadBalancingRules": [
@@ -433,27 +429,27 @@
         "lbOutPip001ID": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('moodleCommon').lbOutPipName001)]",
         "lbOutPip002ID": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('moodleCommon').lbOutPipName002)]",
         "ctlrPipID": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('moodleCommon').ctlrPipName)]",
-        "customVnetIdArr":              "[split(parameters('moodleCommon').customVnetId, '/')]",
-        "vnetSub":                      "[if(equals(parameters('moodleCommon').customVnetId, ''), subscription().subscriptionId, variables('customVnetIdArr')[2])]",
-        "vnetRg":                       "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceGroup().name, variables('customVnetIdArr')[4])]",
-        "vnetName":                     "[if(equals(parameters('moodleCommon').customVnetId, ''), parameters('moodleCommon').vnetName, variables('customVnetIdArr')[8])]",
-        "vnetId":                       "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks', parameters('moodleCommon').vnetName), parameters('moodleCommon').customVnetId)]",
-        "customVnetSubnetIdWeb":        "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetWeb)]",
-        "customVnetSubnetIdSan":        "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetSan)]",
-        "customVnetSubnetIdRedis":      "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetRedis)]",
-        "customVnetSubnetIdElastic":    "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetElastic)]",
-        "customVnetSubnetIdTika":       "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetTika)]",
-        "customVnetSubnetIdGateway":    "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetGateway)]",
-        "customVnetSubnetIdAppGw":      "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetAppGw)]",
-        "customVnetSubnetIdDb":         "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetDb)]",
-        "subnetIdWeb":      "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetWeb), variables('customVnetSubnetIdWeb'))]",
-        "subnetIdSan":      "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetSan), variables('customVnetSubnetIdSan'))]",
-        "subnetIdRedis":    "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetRedis), variables('customVnetSubnetIdRedis'))]",
-        "subnetIdElastic":  "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetElastic), variables('customVnetSubnetIdElastic'))]",
-        "subnetIdTika":     "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetTika), variables('customVnetSubnetIdTika'))]",
-        "subnetIdGateway":  "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetGateway), variables('customVnetSubnetIdGateway'))]",
-        "subnetIdAppGw":    "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetAppGw), variables('customVnetSubnetIdAppGw'))]",
-        "subnetIdDb":       "[if(parameters('moodleCommon').vnetDbDeploySwitch, if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetDb), variables('customVnetSubnetIdDb')), '')]"
+        "customVnetIdArr": "[split(parameters('moodleCommon').customVnetId, '/')]",
+        "vnetSub": "[if(equals(parameters('moodleCommon').customVnetId, ''), subscription().subscriptionId, variables('customVnetIdArr')[2])]",
+        "vnetRg": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceGroup().name, variables('customVnetIdArr')[4])]",
+        "vnetName": "[if(equals(parameters('moodleCommon').customVnetId, ''), parameters('moodleCommon').vnetName, variables('customVnetIdArr')[8])]",
+        "vnetId": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks', parameters('moodleCommon').vnetName), parameters('moodleCommon').customVnetId)]",
+        "customVnetSubnetIdWeb": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetWeb)]",
+        "customVnetSubnetIdSan": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetSan)]",
+        "customVnetSubnetIdRedis": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetRedis)]",
+        "customVnetSubnetIdElastic": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetElastic)]",
+        "customVnetSubnetIdTika": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetTika)]",
+        "customVnetSubnetIdGateway": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetGateway)]",
+        "customVnetSubnetIdAppGw": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetAppGw)]",
+        "customVnetSubnetIdDb": "[concat(parameters('moodleCommon').customVnetId, '/subnets/', parameters('moodleCommon').subnetDb)]",
+        "subnetIdWeb": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetWeb), variables('customVnetSubnetIdWeb'))]",
+        "subnetIdSan": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetSan), variables('customVnetSubnetIdSan'))]",
+        "subnetIdRedis": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetRedis), variables('customVnetSubnetIdRedis'))]",
+        "subnetIdElastic": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetElastic), variables('customVnetSubnetIdElastic'))]",
+        "subnetIdTika": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetTika), variables('customVnetSubnetIdTika'))]",
+        "subnetIdGateway": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetGateway), variables('customVnetSubnetIdGateway'))]",
+        "subnetIdAppGw": "[if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetAppGw), variables('customVnetSubnetIdAppGw'))]",
+        "subnetIdDb": "[if(parameters('moodleCommon').vnetDbDeploySwitch, if(equals(parameters('moodleCommon').customVnetId, ''), resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), parameters('moodleCommon').subnetDb), variables('customVnetSubnetIdDb')), '')]"
     },
     "outputs": {
         "lbPubIp": {

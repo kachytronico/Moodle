@@ -1,4 +1,4 @@
-{
+2019-11-01"apiVersion":{
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
@@ -129,7 +129,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2017-10-01",
+            "apiVersion": "2023-05-01",
             "location": "[parameters('location')]",
             "name": "[variables('nicName')]",
             "properties": {
