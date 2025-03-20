@@ -7,7 +7,7 @@
             "metadata": {
                 "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
             },
-            "defaultValue": "https://raw.githubusercontent.com/Azure/Moodle/master/"
+            "defaultValue": "https://raw.githubusercontent.com/kachytronico/Moodle/master/"
         },
         "_artifactsLocationSasToken": {
             "type": "securestring",
@@ -31,16 +31,36 @@
             "properties": {
                 "mode": "Incremental",
                 "parameters": {
-                    "_artifactsLocation":           { "value": "[parameters('_artifactsLocation')]" },
-                    "_artifactsLocationSasToken":   { "value": "[parameters('_artifactsLocationSasToken')]" },
-                    "redisDeploySwitch":            { "value": false },
-                    "sshPublicKey":                 { "value": "[parameters('sshPublicKey')]" },
-                    "dbServerType":                 { "value": "mysqlflex" },
-                    "vnetDbDeploySwitch":           {"value": true },
-                    "mysqlflexSkuName":             { "value": "Standard_D8ds_v4" },
-                    "mysqlflexStgIops":             { "value": 1000 },
-                    "mysqlflexStgSizeGiB":          { "value": 128 },
-                    "fileServerDiskSize":           { "value": 128 }
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[parameters('_artifactsLocationSasToken')]"
+                    },
+                    "redisDeploySwitch": {
+                        "value": false
+                    },
+                    "sshPublicKey": {
+                        "value": "[parameters('sshPublicKey')]"
+                    },
+                    "dbServerType": {
+                        "value": "mysqlflex"
+                    },
+                    "vnetDbDeploySwitch": {
+                        "value": true
+                    },
+                    "mysqlflexSkuName": {
+                        "value": "Standard_D8ds_v4"
+                    },
+                    "mysqlflexStgIops": {
+                        "value": 1000
+                    },
+                    "mysqlflexStgSizeGiB": {
+                        "value": 128
+                    },
+                    "fileServerDiskSize": {
+                        "value": 128
+                    }
                 },
                 "templateLink": {
                     "uri": "[concat(parameters('_artifactsLocation'), 'azuredeploy.json', parameters('_artifactsLocationSasToken'))]"
